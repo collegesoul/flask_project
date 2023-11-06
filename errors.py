@@ -10,6 +10,7 @@ class KeyExists(Exception):
         print("This key already exist")
 
 
+# Custom error messages for errors
 messages = {
     "no-content": {"message": "No Content Found"},
     "key-not-found": {"message": "No such key exists"},
