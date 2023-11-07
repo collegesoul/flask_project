@@ -26,29 +26,39 @@ def get_key(key):
 @app.post('/api/v1/key')
 def create_key():
     data = request.get_json()
-    key = data['key']
-    value = data['value']
-    if key and value:
-        try:
-            new_key_value_pair = db.create_key(key, value)
-        except KeyExists:
-            return jsonify(messages["key-exists"]), 400
-        else:
-            return jsonify(new_key_value_pair), 201
-    return jsonify(messages["empty-body"]), 400
+    try:
+        key = data['key']
+        value = data['value']
+    except KeyError:
+        return jsonify(messages["invalid-format"]), 404
+    else:
+        if key and value:
+            try:
+                new_key_value_pair = db.create_key(key, value)
+            except KeyExists:
+                return jsonify(messages["key-exists"]), 400
+            else:
+                return jsonify(new_key_value_pair), 201
+        return jsonify(messages["empty-body"]), 400
 
 
 @app.put('/api/v1/key')
 def update_key():
     data = request.get_json()
-    key = data['key']
-    value = data['value']
     try:
-        key_value_pair = db.update_key(key, value)
-    except KeyNotFound:
-        return jsonify(messages["key-not-found"]), 404
+        key = data['key']
+        value = data['value']
+    except KeyError:
+        return jsonify(messages["invalid-format"]), 404
     else:
-        return jsonify(key_value_pair), 200
+        if key and value:
+            try:
+                key_value_pair = db.update_key(key, value)
+            except KeyNotFound:
+                return jsonify(messages["key-not-found"]), 404
+            else:
+                return jsonify(key_value_pair), 200
+        return jsonify(messages["empty-body"]), 400
 
 
 if __name__ == '__main__':
