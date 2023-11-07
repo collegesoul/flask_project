@@ -12,8 +12,9 @@ class KeyExists(Exception):
 
 # Custom error messages for errors
 messages = {
-    "no-content": {"message": "No Content Found"},
-    "key-not-found": {"message": "No such key exists"},
-    "key-exists": {"message": "Cannot create key as key already exists"},
-    "empty-body": {"message": "key and value parameters should not be empty"}
+    "empty-body": {"message": "key and value parameters should not be empty"},
+    "invalid-format": {"message": "invalid use of body parameters: use 'key' and 'value' for parameters"},
+    "key-not-found": {"message": "no such key exists"},
+    "key-exists": {"message": "cannot create key as key already exists"},
+    "no-content": {"message": "no Content Found"}
 }
